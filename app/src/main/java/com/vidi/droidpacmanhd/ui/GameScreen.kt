@@ -85,7 +85,7 @@ fun GameScreen(engine: GameEngine) {
                 }
             },
     ) {
-        Column(modifier = Modifier.fillMaxSize().safeDrawingPadding()) {
+        Column(modifier = Modifier.fillMaxSize().safeDrawingPadding().padding(top = 12.dp)) {
             TopBar(
                 onToggleLang = { com.vidi.droidpacmanhd.i18n.Loc.toggle() },
                 onPause = { engine.togglePause() },
