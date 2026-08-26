@@ -14,6 +14,7 @@ enum class Difficulty { EASY, NORMAL, HARD }
 
 data class DifficultyConfig(
     val lives: Int,
+    val pacSpeedMul: Double,
     val ghostSpeedMul: Double,
     val frightenedMs: Double,
     val releaseDelays: List<Double>,
@@ -23,9 +24,9 @@ data class DifficultyConfig(
 /** Direct port of the `MAZE`/`DIFFICULTIES`/`GHOST_DEFS`/`PHASES` tables from script.js. */
 object GameConfig {
     val difficulties: Map<Difficulty, DifficultyConfig> = mapOf(
-        Difficulty.EASY to DifficultyConfig(4, 0.82, 9000.0, listOf(150.0, 2200.0, 6000.0, 10000.0), 8000),
-        Difficulty.NORMAL to DifficultyConfig(3, 0.94, 7000.0, listOf(150.0, 2000.0, 5500.0, 9000.0), 10000),
-        Difficulty.HARD to DifficultyConfig(2, 1.08, 5000.0, listOf(150.0, 1200.0, 3800.0, 6500.0), 12000),
+        Difficulty.EASY to DifficultyConfig(4, 0.85, 0.72, 9000.0, listOf(150.0, 2200.0, 6000.0, 10000.0), 8000),
+        Difficulty.NORMAL to DifficultyConfig(3, 0.95, 0.85, 7000.0, listOf(150.0, 2000.0, 5500.0, 9000.0), 10000),
+        Difficulty.HARD to DifficultyConfig(2, 1.05, 0.98, 5000.0, listOf(150.0, 1200.0, 3800.0, 6500.0), 12000),
     )
 
     // 0 = dot, 1 = wall, 2 = ghost house, 3 = power pellet, 4 = empty path
@@ -89,8 +90,8 @@ object GameConfig {
         Phase(PhaseMode.CHASE, 999999.0),
     )
 
-    const val BASE_PAC_SPEED = 0.155 // sim units / ms
-    const val BASE_GHOST_SPEED = 0.135
+    const val BASE_PAC_SPEED = 0.130 // sim units / ms
+    const val BASE_GHOST_SPEED = 0.120
     const val DEATH_ANIM_MS = 900.0
     const val READY_PAUSE_MS = 650.0
 

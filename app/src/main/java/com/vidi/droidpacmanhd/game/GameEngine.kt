@@ -160,7 +160,7 @@ class GameEngine(context: Context) {
 
         stepEntity(
             pacman,
-            speed = GameConfig.BASE_PAC_SPEED,
+            speed = GameConfig.BASE_PAC_SPEED * cfg.pacSpeedMul,
             dt = dt,
             pickDir = { e, c, r -> pickPacDir(e, c, r) },
             onEnter = { c, r -> handleDotConsumption(c, r) },
