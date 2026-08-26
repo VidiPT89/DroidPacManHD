@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -83,15 +85,42 @@ private fun DifficultyButton(name: String, meta: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun PauseOverlay(onResume: () -> Unit) {
+fun PauseOverlay(onResume: () -> Unit, onMenu: () -> Unit) {
+    // Full-screen tap-anywhere-to-resume goes first (behind) so it never swallows
+    // taps meant for the explicit buttons drawn on top of it below.
+    Box(modifier = Modifier.fillMaxSize().clickable(onClick = onResume))
     ScrimBox {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(Loc.t("pausedTitle"), color = YELLOW, fontSize = 28.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace)
             Text(Loc.t("pausedSub"), color = Color.White, fontSize = 14.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                Loc.t("resumeBtn"),
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
+                modifier = Modifier
+                    .width(170.dp)
+                    .background(YELLOW, RoundedCornerShape(10.dp))
+                    .clickable(onClick = onResume)
+                    .padding(vertical = 12.dp),
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                Loc.t("menuBtn"),
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .width(170.dp)
+                    .background(Color.White.copy(alpha = 0.06f), RoundedCornerShape(10.dp))
+                    .border(1.dp, WALL_BLUE, RoundedCornerShape(10.dp))
+                    .clickable(onClick = onMenu)
+                    .padding(vertical = 10.dp),
+                textAlign = TextAlign.Center,
+            )
         }
     }
-    // Full-screen tap target to resume.
-    Box(modifier = Modifier.fillMaxSize().clickable(onClick = onResume))
 }
 
 @Composable

@@ -407,7 +407,16 @@ class GameEngine(context: Context) {
 
     fun releaseDir(id: Any) {
         heldDirs.removeAll { it.first == id }
-        heldDirs.lastOrNull()?.let { pacman.queuedDir = it.second }
+        val last = heldDirs.lastOrNull()
+        if (last != null) {
+            pacman.queuedDir = last.second
+        } else {
+            // No direction is held anymore: forget the queued turn instead of leaving it
+            // stuck pointing the way it last pointed. Otherwise a single tap-and-release
+            // keeps forcing Pac-Man to turn that way at every future intersection for the
+            // rest of the game, which can trap him circling the same small loop forever.
+            pacman.queuedDir = Dir.ZERO
+        }
     }
 
     // MARK: Flow control

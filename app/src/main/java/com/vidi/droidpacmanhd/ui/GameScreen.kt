@@ -120,7 +120,7 @@ fun GameScreen(engine: GameEngine) {
             }
         }
         if (engine.running && engine.gamePaused && !engine.over) {
-            PauseOverlay(onResume = { engine.resumeGame() })
+            PauseOverlay(onResume = { engine.resumeGame() }, onMenu = { engine.newGame(engine.difficulty) })
         }
         if (engine.over && !dismissedGameOver) {
             GameOverOverlay(
