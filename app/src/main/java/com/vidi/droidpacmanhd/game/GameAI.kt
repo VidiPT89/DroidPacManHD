@@ -35,6 +35,16 @@ fun GameEngine.pickPacDir(e: PacMan, col: Int, row: Int): Dir {
             pacman.lastDir = options[0]
             return options[0]
         }
+        // A true dead end (no non-reverse way out): back out on his own instead of
+        // freezing against the wall. Clearing the queued direction here is what keeps
+        // this safe — without it, a direction still held on the D-pad would just walk
+        // him straight back in next frame, producing the exact infinite bounce we
+        // fixed before. A real intersection (2+ options) still needs a manual turn.
+        if (options.isEmpty() && !pacBlocked(col + reverse.x, row + reverse.y)) {
+            pacman.queuedDir = Dir.ZERO
+            pacman.lastDir = reverse
+            return reverse
+        }
     }
     return Dir.ZERO
 }
