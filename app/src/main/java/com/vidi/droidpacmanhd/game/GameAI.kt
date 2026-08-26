@@ -4,7 +4,8 @@ import kotlin.math.hypot
 import kotlin.math.min
 import kotlin.random.Random
 
-private val ALL_DIRS = listOf(Dir(0, -1), Dir(0, 1), Dir(-1, 0), Dir(1, 0))
+// Order matters for tie-breaks: matches the original arcade priority (up, left, down, right).
+private val ALL_DIRS = listOf(Dir(0, -1), Dir(-1, 0), Dir(0, 1), Dir(1, 0))
 
 /** Direct port of `pickPacDir`/`pickGhostDir`/`getGhostTarget` from GameScene+AI.swift. */
 
